@@ -121,6 +121,11 @@ app.UseAuthorization();
 // Routing
 app.MapStaticAssets();
 
+app.MapControllerRoute(
+    name: "areas",
+    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}")
+    .WithStaticAssets();
+
 // Default MVC Route
 app.MapControllerRoute(
     name: "default",

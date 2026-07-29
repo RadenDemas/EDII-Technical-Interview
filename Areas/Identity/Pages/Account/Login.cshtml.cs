@@ -115,7 +115,25 @@ namespace EDIITechincalInterview.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    return LocalRedirect(returnUrl);
+                    var user = await _signInManager.UserManager.FindByEmailAsync(Input.Email);
+                    if (await _signInManager.UserManager.IsInRoleAsync(user, "Admin"))
+                    {
+                        return RedirectToAction(
+                            "Index",
+                            "Dashboard",
+                            new { area = "Admin" });
+                    }
+                    else if (await _signInManager.UserManager.IsInRoleAsync(user, "User"))
+                    {
+                        return RedirectToAction(
+                            "Index",
+                            "Dashboard",
+                            new { area = "User" });
+                    }
+                    else
+                    {
+                        return LocalRedirect(returnUrl);
+                    }                    
                 }
                 if (result.RequiresTwoFactor)
                 {
