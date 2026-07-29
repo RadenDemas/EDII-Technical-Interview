@@ -143,7 +143,25 @@ namespace EDIITechincalInterview.Areas.Identity.Pages.Account
                     else
                     {
                         await _signInManager.SignInAsync(user, isPersistent: false);
-                        return LocalRedirect(returnUrl);
+
+                        if (await _userManager.IsInRoleAsync(user, "Admin"))
+                        {
+                            return RedirectToAction(
+                                "Index",
+                                "Dashboard",
+                                new { area = "Admin" });
+                        }
+                        else if (await _userManager.IsInRoleAsync(user, "User"))
+                        {
+                            return RedirectToAction(
+                                "Index",
+                                "Dashboard",
+                                new { area = "User" });
+                        }
+                        else
+                        {
+                            return LocalRedirect(returnUrl);
+                        }
                     }
                 }
                 foreach (var error in result.Errors)
