@@ -1,0 +1,147 @@
+@model EDIITechincalInterview.Areas.User.ViewModels.BiodataFormViewModel
+
+<div class="card mb-4">
+    <div class="card-header">
+        Data Pribadi
+    </div>
+    <div class="card-body">
+
+        <h6 class="mb-3 text-muted">Informasi Posisi</h6>
+        <div class="row">
+            <div class="col-md-12 mb-3">
+                <label asp-for="PosisiDilamar"></label>
+                <input asp-for="PosisiDilamar" class="form-control"/>
+                <span asp-validation-for="PosisiDilamar" class="text-danger"></span>
+            </div>
+        </div>
+
+        <hr class="mb-4" />
+        <h6 class="mb-3 text-muted">Data Diri</h6>
+        
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label asp-for="Nama"></label>
+                <input asp-for="Nama" class="form-control"/>
+                <span asp-validation-for="Nama" class="text-danger"></span>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label asp-for="NomorKtp"></label>
+                <input asp-for="NomorKtp" class="form-control"/>
+                <span asp-validation-for="NomorKtp" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label asp-for="TempatLahir"></label>
+                <input asp-for="TempatLahir" class="form-control"/>
+                <span asp-validation-for="TempatLahir" class="text-danger"></span>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label asp-for="TanggalLahir"></label>
+                <input asp-for="TanggalLahir" class="form-control" type="date" />
+                <span asp-validation-for="TanggalLahir" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label asp-for="JenisKelamin"></label>
+                <select asp-for="JenisKelamin" class="form-select">
+                    <option value="">-- Pilih --</option>
+                    <option value="Laki-Laki">Laki-Laki</option>
+                    <option value="Perempuan">Perempuan</option>
+                </select>
+                <span asp-validation-for="JenisKelamin" class="text-danger"></span>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label asp-for="Agama"></label>
+                <select asp-for="Agama" class="form-select">
+                    <option value="">-- Pilih --</option>
+                    <option value="Islam">Islam</option>
+                    <option value="Kristen">Kristen</option>
+                    <option value="Katolik">Katolik</option>
+                    <option value="Hindu">Hindu</option>
+                    <option value="Buddha">Buddha</option>
+                    <option value="Konghucu">Konghucu</option>
+                    <option value="Lainnya">Lainnya</option>
+                </select>
+                <span asp-validation-for="Agama" class="text-danger"></span>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label asp-for="GolonganDarah"></label>
+                <select asp-for="GolonganDarah" class="form-select">
+                    <option value="">-- Pilih --</option>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="AB">AB</option>
+                    <option value="O">O</option>
+                </select>
+                <span asp-validation-for="GolonganDarah" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-12 mb-3">
+                <label asp-for="Status"></label>
+                <input asp-for="Status" class="form-control" placeholder="Contoh: Belum Menikah / Menikah" />
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>
+        </div>
+
+        <hr class="mb-4" />
+        <h6 class="mb-3 text-muted">Informasi Kontak & Alamat</h6>
+
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label asp-for="Email"></label>
+                <input asp-for="Email" class="form-control" type="email" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label asp-for="NomorTelepon"></label>
+                <input asp-for="NomorTelepon" class="form-control"/>
+                <span asp-validation-for="NomorTelepon" class="text-danger"></span>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label asp-for="OrangTerdekat"></label>
+                <input asp-for="OrangTerdekat" class="form-control" placeholder="Nama / No HP" />
+                <span asp-validation-for="OrangTerdekat" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label asp-for="AlamatKtp"></label>
+                <textarea asp-for="AlamatKtp" class="form-control" rows="3"></textarea>
+                <span asp-validation-for="AlamatKtp" class="text-danger"></span>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label asp-for="AlamatTinggal"></label>
+                <textarea asp-for="AlamatTinggal" class="form-control" rows="3"></textarea>
+                <span asp-validation-for="AlamatTinggal" class="text-danger"></span>
+            </div>
+        </div>
+
+        <hr class="mb-4" />
+        <h6 class="mb-3 text-muted">Informasi Tambahan</h6>
+
+        <div class="row">
+            <div class="col-md-12 mb-3">
+                <label asp-for="Skill"></label>
+                <textarea asp-for="Skill" class="form-control" rows="3" placeholder="Sebutkan keahlian/skill yang Anda miliki..."></textarea>
+                <span asp-validation-for="Skill" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label asp-for="PenghasilanDiharapkan"></label>
+                <div class="input-group">
+                    <span class="input-group-text">Rp</span>
+                    <input asp-for="PenghasilanDiharapkan" class="form-control" type="number" />
+                </div>
+                <span asp-validation-for="PenghasilanDiharapkan" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-6 mb-3 d-flex align-items-center">
+                <div class="form-check mt-3">
+                    <input class="form-check-input" type="checkbox" asp-for="BersediaDitempatkan" id="BersediaDitempatkan">
+                    <label class="form-check-label" asp-for="BersediaDitempatkan"></label>
+                </div>
+                <span asp-validation-for="BersediaDitempatkan" class="text-danger"></span>
+            </div>
+        </div>
+
+    </div>
+</div>

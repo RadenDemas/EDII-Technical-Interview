@@ -1,52 +1,37 @@
 using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Identity;
 
-namespace EDIITechincalInterview.Models
+namespace EDIITechincalInterview.Areas.User.ViewModels
 {
-    public class Biodata
+    public class BiodataFormViewModel
     {
-        public int Id { get; set; }
-
-        [Required]
-        public string UserId { get; set; } = string.Empty;
-
-        public IdentityUser User { get; set; } = null!;
-
         [Required]
         [Display(Name = "Posisi yang Dilamar")]
-        [StringLength(100)]
         public string PosisiDilamar { get; set; } = string.Empty;
 
         [Required]
-        [Display(Name = "Nama Lengkap")]
-        [StringLength(100)]
         public string Nama { get; set; } = string.Empty;
 
         [Required]
+        [StringLength(16, MinimumLength = 16)]
         [Display(Name = "Nomor KTP")]
-        [StringLength(16)]
         public string NomorKtp { get; set; } = string.Empty;
 
         [Required]
-        [Display(Name = "Tempat Lahir")]
         public string TempatLahir { get; set; } = string.Empty;
 
         [Required]
-        [Display(Name = "Tanggal Lahir")]
         [DataType(DataType.Date)]
+        [Display(Name = "Tanggal Lahir")]
         public DateTime TanggalLahir { get; set; }
 
         [Required]
-        [Display(Name = "Jenis Kelamin")]
         public string JenisKelamin { get; set; } = string.Empty;
 
         [Required]
         public string Agama { get; set; } = string.Empty;
 
-        [Display(Name = "Golongan Darah")]
         public string? GolonganDarah { get; set; }
 
-        [Display(Name = "Status")]
         public string? Status { get; set; }
 
         [Required]
@@ -68,26 +53,21 @@ namespace EDIITechincalInterview.Models
 
         [Required]
         [Display(Name = "Orang Terdekat yang Dapat Dihubungi")]
-        public string KontakDarurat { get; set; } = string.Empty;
+        public string OrangTerdekat { get; set; } = string.Empty;
 
-        [Display(Name = "Skill")]
         public string? Skill { get; set; }
 
-        [Display(Name = "Bersedia Ditempatkan")]
+        [Display(Name = "Bersedia Ditempatkan di Seluruh Kantor Perusahaan")]
         public bool BersediaDitempatkan { get; set; }
 
         [Display(Name = "Penghasilan yang Diharapkan")]
         [Range(0, double.MaxValue)]
-        public decimal PenghasilanDiharapkan { get; set; }        
+        public decimal PenghasilanDiharapkan { get; set; }
 
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public List<PendidikanTerakhirViewModel> Pendidikan { get; set; } = new();
 
-        public DateTime? UpdatedAt { get; set; }
+        public List<RiwayatPelatihanViewModel> RiwayatPelatihan { get; set; } = new();
 
-        public ICollection<PendidikanTerakhir> PendidikanTerakhir { get; set; } = new List<PendidikanTerakhir>();
-
-        public ICollection<RiwayatPelatihan> RiwayatPelatihan { get; set; } = new List<RiwayatPelatihan>();
-
-        public ICollection<RiwayatPekerjaan> RiwayatPekerjaan { get; set; } = new List<RiwayatPekerjaan>();
+        public List<RiwayatPekerjaanViewModel> RiwayatPekerjaan { get; set; } = new();
     }
 }

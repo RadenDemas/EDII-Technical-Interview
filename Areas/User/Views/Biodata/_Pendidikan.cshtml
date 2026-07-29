@@ -1,0 +1,120 @@
+@model EDIITechincalInterview.Areas.User.ViewModels.BiodataFormViewModel
+
+<div class="card mt-4">
+
+    <div class="card-header d-flex justify-content-between align-items-center">
+
+        <h5 class="mb-0">Pendidikan Terakhir</h5>
+
+        <button type="button"
+                class="btn btn-success btn-sm"
+                id="btnTambahPendidikan">
+
+            Tambah
+
+        </button>
+
+    </div>
+
+    <div class="card-body">
+
+        <div id="pendidikan-container" class="item-container">
+
+            @for (int i = 0; i < (Model.Pendidikan?.Count > 0 ? Model.Pendidikan.Count : 1); i++)
+            {
+                <div class="border rounded p-3 mb-3 pendidikan-item item-row">
+
+                    <div class="row">
+
+                        <div class="col-md-4 mb-3">
+
+                            <label asp-for="Pendidikan[i].JenjangPendidikan"></label>
+
+                            <input asp-for="Pendidikan[i].JenjangPendidikan"
+                                   class="form-control" />
+
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+
+                            <label asp-for="Pendidikan[i].NamaInstitusiAkademik"></label>
+
+                            <input asp-for="Pendidikan[i].NamaInstitusiAkademik"
+                                   class="form-control" />
+
+                        </div>
+                        
+                        <div class="col-md-4 mb-3">
+
+                            <label asp-for="Pendidikan[i].Jurusan"></label>
+
+                            <input asp-for="Pendidikan[i].Jurusan"
+                                   class="form-control" />
+
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+
+                            <label asp-for="Pendidikan[i].TahunLulus"></label>
+
+                            <input asp-for="Pendidikan[i].TahunLulus"
+                                   class="form-control" />
+
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+
+                            <label asp-for="Pendidikan[i].IPK"></label>
+
+                            <input asp-for="Pendidikan[i].IPK"
+                                   class="form-control" />
+
+                        </div>
+
+                    </div>
+
+                    <button type="button"
+                            class="btn btn-danger mt-2 btnHapusPendidikan btn-hapus">
+
+                        Hapus
+
+                    </button>
+
+                </div>
+            }
+
+        </div>
+
+        <template id="templatePendidikan">
+            <div class="border rounded p-3 mb-3 pendidikan-item item-row">
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label for="Pendidikan___INDEX___JenjangPendidikan">Jenjang Pendidikan</label>
+                        <input name="Pendidikan[__INDEX__].JenjangPendidikan" id="Pendidikan___INDEX___JenjangPendidikan" class="form-control" />
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="Pendidikan___INDEX___NamaInstitusiAkademik">Nama Institusi Akademik</label>
+                        <input name="Pendidikan[__INDEX__].NamaInstitusiAkademik" id="Pendidikan___INDEX___NamaInstitusiAkademik" class="form-control" />
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="Pendidikan___INDEX___Jurusan">Jurusan</label>
+                        <input name="Pendidikan[__INDEX__].Jurusan" id="Pendidikan___INDEX___Jurusan" class="form-control" />
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="Pendidikan___INDEX___TahunLulus">Tahun Lulus</label>
+                        <input name="Pendidikan[__INDEX__].TahunLulus" id="Pendidikan___INDEX___TahunLulus" class="form-control" />
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="Pendidikan___INDEX___IPK">IPK</label>
+                        <input name="Pendidikan[__INDEX__].IPK" id="Pendidikan___INDEX___IPK" class="form-control" />
+                    </div>
+                </div>
+                <button type="button" class="btn btn-danger mt-2 btnHapusPendidikan btn-hapus">
+                    Hapus
+                </button>
+            </div>
+        </template>
+
+    </div>
+
+</div>

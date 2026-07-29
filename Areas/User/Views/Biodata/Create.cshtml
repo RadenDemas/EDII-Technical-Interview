@@ -1,0 +1,44 @@
+@model EDIITechincalInterview.Areas.User.ViewModels.BiodataCreateViewModel
+
+@{
+    ViewData["Title"] = "Entry Biodata";
+}
+
+<div class="container mt-4">
+
+    <h2>Entry Biodata</h2>
+
+    <hr />
+
+    <form asp-action="Create" method="post">
+
+        <partial name="_Form" model="Model" />
+
+        <partial name="_Pendidikan" model="Model" />
+
+        <partial name="_Pelatihan" model="Model" />
+
+        <partial name="_Pekerjaan" model="Model" />
+
+        <div class="mt-4">
+
+            <button class="btn btn-primary">
+                Simpan
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/biodata.js"></script>
+}
+
+<style>
+    .item-container .item-row:only-child .btn-hapus {
+        display: none !important;
+    }
+</style>
