@@ -1,0 +1,107 @@
+@model EDIITechincalInterview.Areas.Admin.ViewModels.BiodataFormViewModel
+
+<div class="card mt-4">
+
+    <div class="card-header d-flex justify-content-between align-items-center">
+
+        <h5 class="mb-0">Riwayat Pekerjaan</h5>
+
+        <button type="button"
+                class="btn btn-success btn-sm"
+                id="btnTambahPekerjaan">
+
+            Tambah
+
+        </button>
+
+    </div>
+
+    <div class="card-body">
+
+        <div id="pekerjaan-container" class="item-container">
+
+            @for (int i = 0; i < (Model.RiwayatPekerjaan?.Count > 0 ? Model.RiwayatPekerjaan.Count : 1); i++)
+            {
+                <div class="border rounded p-3 mb-3 pekerjaan-item item-row">
+
+                    <div class="row">
+
+                        <div class="col-md-4 mb-3">
+
+                            <label asp-for="RiwayatPekerjaan[i].NamaPerusahaan"></label>
+
+                            <input asp-for="RiwayatPekerjaan[i].NamaPerusahaan"
+                                   class="form-control" />
+
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+
+                            <label asp-for="RiwayatPekerjaan[i].PosisiTerakhir"></label>
+
+                            <input asp-for="RiwayatPekerjaan[i].PosisiTerakhir"
+                                   class="form-control" />
+
+                        </div>
+
+                        <div class="col-md-2 mb-3">
+
+                            <label asp-for="RiwayatPekerjaan[i].PendapatanTerakhir"></label>
+
+                            <input asp-for="RiwayatPekerjaan[i].PendapatanTerakhir"
+                                   class="form-control" type="text" />
+
+                        </div>
+
+                        <div class="col-md-2 mb-3">
+
+                            <label asp-for="RiwayatPekerjaan[i].Tahun"></label>
+
+                            <input asp-for="RiwayatPekerjaan[i].Tahun"
+                                   class="form-control" />
+
+                        </div>
+
+                    </div>
+
+                    <button type="button"
+                            class="btn btn-danger mt-2 btnHapusPekerjaan btn-hapus">
+
+                        Hapus
+
+                    </button>
+
+                </div>
+            }
+
+        </div>
+        
+        <template id="templatePekerjaan">
+            <div class="border rounded p-3 mb-3 pekerjaan-item item-row">
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label for="RiwayatPekerjaan___INDEX___NamaPerusahaan">Nama Perusahaan</label>
+                        <input name="RiwayatPekerjaan[__INDEX__].NamaPerusahaan" id="RiwayatPekerjaan___INDEX___NamaPerusahaan" class="form-control" />
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="RiwayatPekerjaan___INDEX___PosisiTerakhir">Posisi Terakhir</label>
+                        <input name="RiwayatPekerjaan[__INDEX__].PosisiTerakhir" id="RiwayatPekerjaan___INDEX___PosisiTerakhir" class="form-control" />
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <label for="RiwayatPekerjaan___INDEX___PendapatanTerakhir">Pendapatan Terakhir</label>
+                        <input name="RiwayatPekerjaan[__INDEX__].PendapatanTerakhir" id="RiwayatPekerjaan___INDEX___PendapatanTerakhir" class="form-control" type="text" />
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <label for="RiwayatPekerjaan___INDEX___Tahun">Tahun</label>
+                        <input name="RiwayatPekerjaan[__INDEX__].Tahun" id="RiwayatPekerjaan___INDEX___Tahun" class="form-control" />
+                    </div>
+                </div>
+                <button type="button" class="btn btn-danger mt-2 btnHapusPekerjaan btn-hapus">
+                    Hapus
+                </button>
+            </div>
+        </template>
+
+    </div>
+
+</div>

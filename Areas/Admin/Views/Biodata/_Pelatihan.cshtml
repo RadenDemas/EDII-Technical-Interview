@@ -1,0 +1,100 @@
+@model EDIITechincalInterview.Areas.Admin.ViewModels.BiodataFormViewModel
+
+<div class="card mt-4">
+
+    <div class="card-header d-flex justify-content-between align-items-center">
+
+        <h5 class="mb-0">Riwayat Pelatihan</h5>
+
+        <button type="button"
+                class="btn btn-success btn-sm"
+                id="btnTambahPelatihan">
+
+            Tambah
+
+        </button>
+
+    </div>
+
+    <div class="card-body">
+
+        <div id="pelatihan-container" class="item-container">
+
+            @for (int i = 0; i < (Model.RiwayatPelatihan?.Count > 0 ? Model.RiwayatPelatihan.Count : 1); i++)
+            {
+                <div class="border rounded p-3 mb-3 pelatihan-item item-row">
+
+                    <div class="row">
+
+                        <div class="col-md-4 mb-3">
+
+                            <label asp-for="RiwayatPelatihan[i].NamaKursusSeminar"></label>
+
+                            <input asp-for="RiwayatPelatihan[i].NamaKursusSeminar"
+                                   class="form-control" />
+
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+
+                            <label asp-for="RiwayatPelatihan[i].MemilikiSertifikat"></label>
+
+                            <select asp-for="RiwayatPelatihan[i].MemilikiSertifikat"
+                                    class="form-select">
+                                <option value="true">Ya</option>
+                                <option value="false">Tidak</option>
+                            </select>
+
+                        </div>
+                        
+                        <div class="col-md-4 mb-3">
+
+                            <label asp-for="RiwayatPelatihan[i].Tahun"></label>
+
+                            <input asp-for="RiwayatPelatihan[i].Tahun"
+                                   class="form-control" />
+
+                        </div>
+                        
+                    </div>
+
+                    <button type="button"
+                            class="btn btn-danger mt-2 btnHapusPelatihan btn-hapus">
+
+                        Hapus
+
+                    </button>
+
+                </div>
+            }
+
+        </div>
+
+        <template id="templatePelatihan">
+            <div class="border rounded p-3 mb-3 pelatihan-item item-row">
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label for="RiwayatPelatihan___INDEX___NamaKursusSeminar">Nama Kursus / Seminar</label>
+                        <input name="RiwayatPelatihan[__INDEX__].NamaKursusSeminar" id="RiwayatPelatihan___INDEX___NamaKursusSeminar" class="form-control" />
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="RiwayatPelatihan___INDEX___MemilikiSertifikat">Memiliki Sertifikat</label>
+                        <select name="RiwayatPelatihan[__INDEX__].MemilikiSertifikat" id="RiwayatPelatihan___INDEX___MemilikiSertifikat" class="form-select">
+                            <option value="true">Ya</option>
+                            <option value="false">Tidak</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="RiwayatPelatihan___INDEX___Tahun">Tahun</label>
+                        <input name="RiwayatPelatihan[__INDEX__].Tahun" id="RiwayatPelatihan___INDEX___Tahun" class="form-control" />
+                    </div>
+                </div>
+                <button type="button" class="btn btn-danger mt-2 btnHapusPelatihan btn-hapus">
+                    Hapus
+                </button>
+            </div>
+        </template>
+
+    </div>
+
+</div>

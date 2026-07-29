@@ -1,13 +1,82 @@
+@model EDIITechincalInterview.Areas.Admin.ViewModels.DashboardViewModel
+
 @{
-    ViewData["Title"] = "Dashboard";
+    ViewData["Title"] = "Dashboard Admin";
 }
 
 <div class="container mt-4">
-
     <h2>Dashboard Admin</h2>
+    <p class="text-muted">Selamat datang, @User.Identity?.Name!</p>
+    <hr class="mb-4" />
 
-    <hr />
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card text-white bg-primary shadow-sm h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Total Users</h5>
+                    <p class="card-text fs-2 fw-bold">@Model.TotalUsers</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-success shadow-sm h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Total Biodata</h5>
+                    <p class="card-text fs-2 fw-bold">@Model.TotalBiodata</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-info shadow-sm h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Biodata Hari Ini</h5>
+                    <p class="card-text fs-2 fw-bold">@Model.BiodataHariIni</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <p>Selamat datang @User.Identity?.Name</p>
-
+    <div class="card shadow-sm">
+        <div class="card-header bg-white">
+            <h5 class="mb-0">Biodata Terbaru</h5>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover table-striped mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Nama Lengkap</th>
+                            <th>Posisi Dilamar</th>
+                            <th>Email</th>
+                            <th>Tanggal Dibuat</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.RecentBiodatas.Any())
+                        {
+                            foreach (var item in Model.RecentBiodatas)
+                            {
+                                <tr>
+                                    <td>@item.Nama</td>
+                                    <td>@item.PosisiDilamar</td>
+                                    <td>@(item.User?.Email ?? item.Email)</td>
+                                    <td>@item.CreatedAt.ToString("dd MMM yyyy HH:mm")</td>
+                                    <td>
+                                        <a asp-area="Admin" asp-controller="Biodata" asp-action="Detail" asp-route-id="@item.Id" class="btn btn-sm btn-info">Detail</a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="5" class="text-center text-muted py-3">Belum ada data biodata terbaru.</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
