@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.RateLimiting;
 using EDIITechincalInterview.Models;
+using Microsoft.AspNetCore.Authorization;
+using EDIITechincalInterview.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -68,11 +70,24 @@ builder.Services.AddRateLimiter(options =>
 builder.Services.AddControllersWithViews(options =>
 {
     options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+    options.Filters.Add<RedirectAuthenticatedUsersPageFilter>();
+});
+
+// Require Authentication by Default
+builder.Services.AddAuthorization(options =>
+{
+    options.FallbackPolicy = new AuthorizationPolicyBuilder()
+        .RequireAuthenticatedUser()
+        .Build();
 });
 
 // Routing Pages
 builder.Services.AddRazorPages(options =>
 {
+    options.Conventions.AllowAnonymousToAreaFolder("Identity", "/Account");
+    options.Conventions.AuthorizeAreaFolder("Identity", "/Account/Manage");
+    options.Conventions.AuthorizeAreaPage("Identity", "/Account/Logout");
+
     options.Conventions.AddPageRoute(
         "/Account/Login",
         "/login"

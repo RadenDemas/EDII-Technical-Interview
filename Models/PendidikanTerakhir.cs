@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
 
 namespace EDIITechincalInterview.Models
 {
@@ -32,6 +33,7 @@ namespace EDIITechincalInterview.Models
 
         [Display(Name = "IPK")]
         [Range(0.00, 4.00)]
+        [Precision(3, 2)]
         public decimal? IPK { get; set; }
     }
 }

@@ -136,21 +136,226 @@ namespace EDIITechincalInterview.Areas.User.Controllers
             return RedirectToAction(nameof(Detail));
         }
 
-        public IActionResult Detail()
+        public async Task<IActionResult> Detail()
         {
-            return View();
+            var userId = _userManager.GetUserId(User);
+
+            var biodata = await _context.Biodatas
+                .Include(b => b.PendidikanTerakhir)
+                .Include(b => b.RiwayatPelatihan)
+                .Include(b => b.RiwayatPekerjaan)
+                .FirstOrDefaultAsync(b => b.UserId == userId);
+
+            if (biodata == null)
+                return RedirectToAction(nameof(Create));
+
+            var model = new BiodataDetailViewModel
+            {
+                BiodataId = biodata.Id,
+                UserId = biodata.UserId,
+                PosisiDilamar = biodata.PosisiDilamar,
+                Nama = biodata.Nama,
+                NomorKtp = biodata.NomorKtp,
+                TempatLahir = biodata.TempatLahir,
+                TanggalLahir = biodata.TanggalLahir,
+                JenisKelamin = biodata.JenisKelamin,
+                Agama = biodata.Agama,
+                GolonganDarah = biodata.GolonganDarah,
+                Status = biodata.Status,
+                AlamatKtp = biodata.AlamatKtp,
+                AlamatTinggal = biodata.AlamatTinggal,
+                Email = biodata.Email,
+                NomorTelepon = biodata.NomorTelepon,
+                OrangTerdekat = biodata.KontakDarurat,
+                Skill = biodata.Skill,
+                BersediaDitempatkan = biodata.BersediaDitempatkan,
+                PenghasilanDiharapkan = biodata.PenghasilanDiharapkan,
+                Pendidikan = biodata.PendidikanTerakhir.Select(p => new PendidikanTerakhirViewModel
+                {
+                    Id = p.Id,
+                    JenjangPendidikan = p.JenjangPendidikan,
+                    NamaInstitusiAkademik = p.NamaInstitusi,
+                    Jurusan = p.Jurusan,
+                    TahunLulus = p.TahunLulus,
+                    IPK = p.IPK ?? 0
+                }).ToList(),
+                RiwayatPelatihan = biodata.RiwayatPelatihan.Select(p => new RiwayatPelatihanViewModel
+                {
+                    Id = p.Id,
+                    NamaKursusSeminar = p.NamaKursusSeminar,
+                    MemilikiSertifikat = p.MemilikiSertifikat,
+                    Tahun = p.Tahun
+                }).ToList(),
+                RiwayatPekerjaan = biodata.RiwayatPekerjaan.Select(p => new RiwayatPekerjaanViewModel
+                {
+                    Id = p.Id,
+                    NamaPerusahaan = p.NamaPerusahaan,
+                    PosisiTerakhir = p.PosisiTerakhir,
+                    PendapatanTerakhir = p.PendapatanTerakhir,
+                    Tahun = p.Tahun
+                }).ToList()
+            };
+
+            return View(model);
         }
 
         [HttpGet]
-        public IActionResult Edit()
+        public async Task<IActionResult> Edit()
         {
-            return View();
+            var userId = _userManager.GetUserId(User);
+
+            var biodata = await _context.Biodatas
+                .Include(b => b.PendidikanTerakhir)
+                .Include(b => b.RiwayatPelatihan)
+                .Include(b => b.RiwayatPekerjaan)
+                .FirstOrDefaultAsync(b => b.UserId == userId);
+
+            if (biodata == null)
+                return RedirectToAction(nameof(Create));
+
+            var model = new BiodataEditViewModel
+            {
+                BiodataId = biodata.Id,
+                PosisiDilamar = biodata.PosisiDilamar,
+                Nama = biodata.Nama,
+                NomorKtp = biodata.NomorKtp,
+                TempatLahir = biodata.TempatLahir,
+                TanggalLahir = biodata.TanggalLahir,
+                JenisKelamin = biodata.JenisKelamin,
+                Agama = biodata.Agama,
+                GolonganDarah = biodata.GolonganDarah,
+                Status = biodata.Status,
+                AlamatKtp = biodata.AlamatKtp,
+                AlamatTinggal = biodata.AlamatTinggal,
+                Email = biodata.Email,
+                NomorTelepon = biodata.NomorTelepon,
+                OrangTerdekat = biodata.KontakDarurat,
+                Skill = biodata.Skill,
+                BersediaDitempatkan = biodata.BersediaDitempatkan,
+                PenghasilanDiharapkan = biodata.PenghasilanDiharapkan,
+                Pendidikan = biodata.PendidikanTerakhir.Select(p => new PendidikanTerakhirViewModel
+                {
+                    Id = p.Id,
+                    JenjangPendidikan = p.JenjangPendidikan,
+                    NamaInstitusiAkademik = p.NamaInstitusi,
+                    Jurusan = p.Jurusan,
+                    TahunLulus = p.TahunLulus,
+                    IPK = p.IPK ?? 0
+                }).ToList(),
+                RiwayatPelatihan = biodata.RiwayatPelatihan.Select(p => new RiwayatPelatihanViewModel
+                {
+                    Id = p.Id,
+                    NamaKursusSeminar = p.NamaKursusSeminar,
+                    MemilikiSertifikat = p.MemilikiSertifikat,
+                    Tahun = p.Tahun
+                }).ToList(),
+                RiwayatPekerjaan = biodata.RiwayatPekerjaan.Select(p => new RiwayatPekerjaanViewModel
+                {
+                    Id = p.Id,
+                    NamaPerusahaan = p.NamaPerusahaan,
+                    PosisiTerakhir = p.PosisiTerakhir,
+                    PendapatanTerakhir = p.PendapatanTerakhir,
+                    Tahun = p.Tahun
+                }).ToList()
+            };
+
+            // Pastikan setidaknya ada 1 form kosong jika tabelnya kosong
+            if (!model.Pendidikan.Any()) model.Pendidikan.Add(new PendidikanTerakhirViewModel());
+            if (!model.RiwayatPelatihan.Any()) model.RiwayatPelatihan.Add(new RiwayatPelatihanViewModel());
+            if (!model.RiwayatPekerjaan.Any()) model.RiwayatPekerjaan.Add(new RiwayatPekerjaanViewModel());
+
+            return View(model);
         }
 
         [HttpPost]
-        public IActionResult Edit(BiodataEditViewModel model)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(BiodataEditViewModel model)
         {
-            return View(model);
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var userId = _userManager.GetUserId(User);
+
+            var biodata = await _context.Biodatas
+                .Include(b => b.PendidikanTerakhir)
+                .Include(b => b.RiwayatPelatihan)
+                .Include(b => b.RiwayatPekerjaan)
+                .FirstOrDefaultAsync(b => b.UserId == userId && b.Id == model.BiodataId);
+
+            if (biodata == null)
+                return NotFound();
+
+            // 1. Update Properti Utama
+            biodata.PosisiDilamar = model.PosisiDilamar;
+            biodata.Nama = model.Nama;
+            biodata.NomorKtp = model.NomorKtp;
+            biodata.TempatLahir = model.TempatLahir;
+            biodata.TanggalLahir = model.TanggalLahir;
+            biodata.JenisKelamin = model.JenisKelamin;
+            biodata.Agama = model.Agama;
+            biodata.GolonganDarah = model.GolonganDarah;
+            biodata.Status = model.Status;
+            biodata.AlamatKtp = model.AlamatKtp;
+            biodata.AlamatTinggal = model.AlamatTinggal;
+            biodata.Email = model.Email;
+            biodata.NomorTelepon = model.NomorTelepon;
+            biodata.KontakDarurat = model.OrangTerdekat;
+            biodata.Skill = model.Skill;
+            biodata.BersediaDitempatkan = model.BersediaDitempatkan;
+            biodata.PenghasilanDiharapkan = model.PenghasilanDiharapkan;
+            biodata.UpdatedAt = DateTime.Now;
+
+            // 2. Hapus Collection Lama
+            _context.PendidikanTerakhirs.RemoveRange(biodata.PendidikanTerakhir);
+            _context.RiwayatPelatihans.RemoveRange(biodata.RiwayatPelatihan);
+            _context.RiwayatPekerjaans.RemoveRange(biodata.RiwayatPekerjaan);
+
+            // 3. Tambahkan Collection Baru
+            if (model.Pendidikan != null)
+            {
+                foreach (var edu in model.Pendidikan)
+                {
+                    biodata.PendidikanTerakhir.Add(new PendidikanTerakhir
+                    {
+                        JenjangPendidikan = edu.JenjangPendidikan,
+                        NamaInstitusi = edu.NamaInstitusiAkademik,
+                        Jurusan = edu.Jurusan,
+                        TahunLulus = edu.TahunLulus,
+                        IPK = edu.IPK
+                    });
+                }
+            }
+
+            if (model.RiwayatPelatihan != null)
+            {
+                foreach (var pel in model.RiwayatPelatihan)
+                {
+                    biodata.RiwayatPelatihan.Add(new RiwayatPelatihan
+                    {
+                        NamaKursusSeminar = pel.NamaKursusSeminar,
+                        MemilikiSertifikat = pel.MemilikiSertifikat,
+                        Tahun = pel.Tahun
+                    });
+                }
+            }
+
+            if (model.RiwayatPekerjaan != null)
+            {
+                foreach (var pek in model.RiwayatPekerjaan)
+                {
+                    biodata.RiwayatPekerjaan.Add(new RiwayatPekerjaan
+                    {
+                        NamaPerusahaan = pek.NamaPerusahaan,
+                        PosisiTerakhir = pek.PosisiTerakhir,
+                        PendapatanTerakhir = pek.PendapatanTerakhir,
+                        Tahun = pek.Tahun
+                    });
+                }
+            }
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Detail));
         }
     }
 }

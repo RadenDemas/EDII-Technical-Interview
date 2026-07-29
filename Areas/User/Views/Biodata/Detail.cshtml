@@ -1,0 +1,205 @@
+@model EDIITechincalInterview.Areas.User.ViewModels.BiodataDetailViewModel
+
+@{
+    ViewData["Title"] = "Detail Biodata";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Detail Biodata</h2>
+        <a asp-action="Edit" class="btn btn-warning">Edit Biodata</a>
+    </div>
+
+    <div class="card mb-4 shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Data Pribadi</h5>
+        </div>
+        <div class="card-body">
+            <div class="row mb-3">
+                <div class="col-sm-4 text-muted">Posisi yang Dilamar</div>
+                <div class="col-sm-8 fw-bold">@Model.PosisiDilamar</div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-md-6">
+                    <dl class="row">
+                        <dt class="col-sm-5">Nama Lengkap</dt>
+                        <dd class="col-sm-7">@Model.Nama</dd>
+
+                        <dt class="col-sm-5">Nomor KTP</dt>
+                        <dd class="col-sm-7">@Model.NomorKtp</dd>
+
+                        <dt class="col-sm-5">Tempat, Tgl Lahir</dt>
+                        <dd class="col-sm-7">@Model.TempatLahir, @Model.TanggalLahir.ToString("dd MMMM yyyy")</dd>
+
+                        <dt class="col-sm-5">Jenis Kelamin</dt>
+                        <dd class="col-sm-7">@Model.JenisKelamin</dd>
+
+                        <dt class="col-sm-5">Agama</dt>
+                        <dd class="col-sm-7">@Model.Agama</dd>
+                        
+                        <dt class="col-sm-5">Golongan Darah</dt>
+                        <dd class="col-sm-7">@(string.IsNullOrEmpty(Model.GolonganDarah) ? "-" : Model.GolonganDarah)</dd>
+                    </dl>
+                </div>
+                <div class="col-md-6">
+                    <dl class="row">
+                        <dt class="col-sm-5">Status</dt>
+                        <dd class="col-sm-7">@(string.IsNullOrEmpty(Model.Status) ? "-" : Model.Status)</dd>
+
+                        <dt class="col-sm-5">Email</dt>
+                        <dd class="col-sm-7">@Model.Email</dd>
+
+                        <dt class="col-sm-5">Nomor Telepon</dt>
+                        <dd class="col-sm-7">@Model.NomorTelepon</dd>
+
+                        <dt class="col-sm-5">Kontak Darurat</dt>
+                        <dd class="col-sm-7">@Model.OrangTerdekat</dd>
+                    </dl>
+                </div>
+            </div>
+            
+            <h6 class="mt-3 text-muted border-bottom pb-2">Alamat</h6>
+            <div class="row">
+                <div class="col-md-6">
+                    <strong>Alamat KTP:</strong>
+                    <p>@Model.AlamatKtp</p>
+                </div>
+                <div class="col-md-6">
+                    <strong>Alamat Tinggal:</strong>
+                    <p>@Model.AlamatTinggal</p>
+                </div>
+            </div>
+            
+            <h6 class="mt-3 text-muted border-bottom pb-2">Informasi Tambahan</h6>
+            <dl class="row">
+                <dt class="col-sm-3">Skill / Keahlian</dt>
+                <dd class="col-sm-9">@(string.IsNullOrEmpty(Model.Skill) ? "-" : Model.Skill)</dd>
+
+                <dt class="col-sm-3">Penghasilan Diharapkan</dt>
+                <dd class="col-sm-9">Rp @Model.PenghasilanDiharapkan.ToString("N0")</dd>
+
+                <dt class="col-sm-3">Bersedia Ditempatkan</dt>
+                <dd class="col-sm-9">@(Model.BersediaDitempatkan ? "Ya" : "Tidak")</dd>
+            </dl>
+        </div>
+    </div>
+
+    <!-- Pendidikan Terakhir -->
+    <div class="card mb-4 shadow-sm">
+        <div class="card-header bg-success text-white">
+            <h5 class="mb-0">Pendidikan Terakhir</h5>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover table-striped mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Jenjang</th>
+                            <th>Nama Institusi</th>
+                            <th>Jurusan</th>
+                            <th>Tahun Lulus</th>
+                            <th>IPK</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.Pendidikan != null && Model.Pendidikan.Any())
+                        {
+                            foreach (var edu in Model.Pendidikan)
+                            {
+                                <tr>
+                                    <td>@edu.JenjangPendidikan</td>
+                                    <td>@edu.NamaInstitusiAkademik</td>
+                                    <td>@edu.Jurusan</td>
+                                    <td>@edu.TahunLulus</td>
+                                    <td>@edu.IPK</td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr><td colspan="5" class="text-center text-muted">Belum ada data</td></tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Riwayat Pelatihan -->
+    <div class="card mb-4 shadow-sm">
+        <div class="card-header bg-info text-white">
+            <h5 class="mb-0">Riwayat Pelatihan</h5>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover table-striped mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Nama Kursus / Seminar</th>
+                            <th>Sertifikat</th>
+                            <th>Tahun</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.RiwayatPelatihan != null && Model.RiwayatPelatihan.Any())
+                        {
+                            foreach (var pel in Model.RiwayatPelatihan)
+                            {
+                                <tr>
+                                    <td>@pel.NamaKursusSeminar</td>
+                                    <td>@(pel.MemilikiSertifikat ? "Ya" : "Tidak")</td>
+                                    <td>@pel.Tahun</td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr><td colspan="3" class="text-center text-muted">Belum ada data</td></tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Riwayat Pekerjaan -->
+    <div class="card mb-4 shadow-sm">
+        <div class="card-header bg-secondary text-white">
+            <h5 class="mb-0">Riwayat Pekerjaan</h5>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover table-striped mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Nama Perusahaan</th>
+                            <th>Posisi Terakhir</th>
+                            <th>Pendapatan Terakhir</th>
+                            <th>Tahun</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.RiwayatPekerjaan != null && Model.RiwayatPekerjaan.Any())
+                        {
+                            foreach (var pek in Model.RiwayatPekerjaan)
+                            {
+                                <tr>
+                                    <td>@pek.NamaPerusahaan</td>
+                                    <td>@pek.PosisiTerakhir</td>
+                                    <td>Rp @pek.PendapatanTerakhir.ToString("N0")</td>
+                                    <td>@pek.Tahun</td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr><td colspan="4" class="text-center text-muted">Belum ada data</td></tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>

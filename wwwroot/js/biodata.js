@@ -54,3 +54,14 @@ $(function () {
     tambahItem("#btnTambahPelatihan", "#pelatihan-container", "#templatePelatihan", "RiwayatPelatihan");
     tambahItem("#btnTambahPekerjaan", "#pekerjaan-container", "#templatePekerjaan", "RiwayatPekerjaan");
 });
+
+// Perbaiki bug validasi jQuery untuk angka desimal dengan koma (Culture id-ID)
+if ($.validator) {
+    $.validator.methods.range = function (value, element, param) {
+        var globalizedValue = value.replace(",", ".");
+        return this.optional(element) || (globalizedValue >= param[0] && globalizedValue <= param[1]);
+    }
+    $.validator.methods.number = function (value, element) {
+        return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:[\s\.,]\d{3})+)(?:[\.,]\d+)?$/.test(value);
+    }
+}
