@@ -88,6 +88,15 @@ builder.Services.AddRazorPages(options =>
 // Build Application
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+
+    await DbSeeder.SeedRoles(services);
+    await DbSeeder.SeedAdmin(services);
+    await DbSeeder.SeedUser(services);
+}
+
 
 // HTTP Request Pipeline
 if (!app.Environment.IsDevelopment())
